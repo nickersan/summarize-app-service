@@ -1,1 +1,1 @@
-# summarize-app-service
+# summarize-service

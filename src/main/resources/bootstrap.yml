@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: "app-service"
+  banner:
+    location: classpath:banner.txt
