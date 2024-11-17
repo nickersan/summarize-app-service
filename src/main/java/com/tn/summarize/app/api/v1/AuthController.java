@@ -3,7 +3,7 @@ package com.tn.summarize.app.api.v1;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,7 @@ import com.tn.summarize.app.service.UserService;
 @Slf4j
 @RestController
 @RequestMapping("/v1/auth")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthController
 {
   private final UserService userService;

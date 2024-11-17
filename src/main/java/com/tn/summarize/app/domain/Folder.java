@@ -1,14 +1,6 @@
 package com.tn.summarize.app.domain;
 
-public record Folder(Long id, Long parentId, String userId, String name)
-{
-  public Folder(String userId, String name)
-  {
-    this(null, null, userId, name);
-  }
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 
-  public Folder(Long parentId, String userId, String name)
-  {
-    this(null, parentId, userId, name);
-  }
-}
+public record Folder(long id, @Nullable Long parentId, @NotNull String userId, @NotNull String name) {}

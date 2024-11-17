@@ -7,7 +7,7 @@ import static com.tn.summarize.app.security.Jwt.subject;
 import java.security.PublicKey;
 import java.util.Optional;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.tn.summarize.app.client.AuthClient;
@@ -17,7 +17,7 @@ import com.tn.summarize.app.domain.User;
 import com.tn.summarize.app.domain.UserAndTokens;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService
 {
   private final PublicKey publicKey;

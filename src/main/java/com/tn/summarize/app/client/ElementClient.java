@@ -2,6 +2,7 @@ package com.tn.summarize.app.client;
 
 import java.util.List;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,7 +19,7 @@ public interface ElementClient
   List<Element> findRoots(@RequestParam("ownerId") String ownerId, @RequestParam("type") String type);
 
   @GetMapping("/v1")
-  List<Element> findChildren(@RequestParam("parentId") long parentId, @RequestParam("ownerId") String ownerId, @RequestParam("type") String type);
+  List<Element> findChildren(@RequestParam("ownerId") String ownerId, @RequestParam("parentId") long parentId, @RequestParam("type") String type);
 
   @PostMapping("/v1")
   Element create(ElementRequest element);
@@ -26,7 +27,7 @@ public interface ElementClient
   @PutMapping("/v1/{elementId}")
   Element update(@PathVariable("elementId") long elementId, ElementRequest element);
 
-  record Element(Long id, Long parentId, @NotNull String ownerId, @NotNull String type, @NotNull String name) {}
+  record Element(long id, @NotNull String ownerId, @Nullable Long parentId, @NotNull String type, @NotNull String name) {}
 
-  record ElementRequest(Long parentId, @NotNull String ownerId, @NotNull String type, @NotNull String name) {}
+  record ElementRequest(@NotNull String ownerId, @Nullable Long parentId, @NotNull String type, @NotNull String name) {}
 }

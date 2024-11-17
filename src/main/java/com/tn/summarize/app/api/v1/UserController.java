@@ -1,6 +1,6 @@
 package com.tn.summarize.app.api.v1;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -14,7 +14,7 @@ import com.tn.summarize.app.domain.User;
 @Slf4j
 @RestController
 @RequestMapping("/v1/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController
 {
   private final UserClient userClient;
