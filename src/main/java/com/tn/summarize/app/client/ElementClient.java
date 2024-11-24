@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "ElementClient", url = "${api.element.url}")
 public interface ElementClient
 {
+  @GetMapping("/v1/{elementId}")
+  Element get(@RequestParam("ownerId") String ownerId, @RequestParam("type") String type, @PathVariable("elementId") long elementId);
+
   @GetMapping("/v1?parentId=null")
-  List<Element> findRoots(@RequestParam("ownerId") String ownerId, @RequestParam("type") String type);
+  List<Element> getAll(@RequestParam("ownerId") String ownerId, @RequestParam("type") String type);
 
   @GetMapping("/v1")
-  List<Element> findChildren(@RequestParam("ownerId") String ownerId, @RequestParam("parentId") long parentId, @RequestParam("type") String type);
+  List<Element> getAll(@RequestParam("ownerId") String ownerId, @RequestParam("parentId") long parentId, @RequestParam("type") String type);
 
   @PostMapping("/v1")
   Element create(ElementRequest element);

@@ -17,20 +17,40 @@ public class FolderService
 
   private final ElementClient elementClient;
 
-  public List<Folder> roots(@NotNull String userId)
+  public Folder get(@NotNull String userId, long folderId)
   {
-    return elementClient.findRoots(userId, ELEMENT_TYPE).stream().map(this::folder).toList();
+    return folder(elementClient.get(userId, ELEMENT_TYPE, folderId));
   }
 
-  public List<Folder> children(@NotNull String userId, long parentId)
+  public List<Folder> getAll(@NotNull String userId)
   {
-    return elementClient.findChildren(userId, parentId, ELEMENT_TYPE).stream().map(this::folder).toList();
+    return elementClient.getAll(userId, ELEMENT_TYPE).stream().map(this::folder).toList();
+  }
+
+  public List<Folder> getAll(@NotNull String userId, long parentFolderId)
+  {
+    return elementClient.getAll(userId, parentFolderId, ELEMENT_TYPE).stream().map(this::folder).toList();
   }
 
   public Folder create(@NotNull String userId, @Nullable Long parentId, @NotNull String name)
   {
     return folder(
       elementClient.create(
+        new ElementClient.ElementRequest(
+          userId,
+          parentId,
+          ELEMENT_TYPE,
+          name
+        )
+      )
+    );
+  }
+
+  public Folder update(@NotNull String userId, long folderId, @Nullable Long parentId, @NotNull String name)
+  {
+    return folder(
+      elementClient.update(
+        folderId,
         new ElementClient.ElementRequest(
           userId,
           parentId,

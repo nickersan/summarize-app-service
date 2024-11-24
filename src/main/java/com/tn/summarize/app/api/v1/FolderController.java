@@ -12,8 +12,10 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tn.summarize.app.domain.Folder;
@@ -27,16 +29,16 @@ public class FolderController
 {
   private final FolderService folderService;
 
-  @GetMapping
-  List<Folder> roots(@AuthenticationPrincipal Jwt jwt)
+  @GetMapping("/{folderId}")
+  Folder get(@AuthenticationPrincipal Jwt jwt, @PathVariable("folderId") long folderId)
   {
-    return folderService.roots(jwt.getSubject());
+    return folderService.get(jwt.getSubject(), folderId);
   }
 
-  @GetMapping("/{parentId}")
-  List<Folder> children(@AuthenticationPrincipal Jwt jwt, @PathVariable("parentId") long parentId)
+  @GetMapping
+  List<Folder> getAll(@AuthenticationPrincipal Jwt jwt, @RequestParam(value = "parentFolderId", required = false) Long parentFolderId)
   {
-    return folderService.children(jwt.getSubject(), parentId);
+    return parentFolderId != null ? folderService.getAll(jwt.getSubject(), parentFolderId) : folderService.getAll(jwt.getSubject());
   }
 
   @PostMapping
@@ -44,6 +46,17 @@ public class FolderController
   {
     return folderService.create(
       jwt.getSubject(),
+      folderRequest.parentId,
+      folderRequest.name()
+    );
+  }
+
+  @PutMapping("/{folderId}")
+  Folder update(@AuthenticationPrincipal Jwt jwt, @PathVariable("folderId") long folderId, @RequestBody FolderRequest folderRequest)
+  {
+    return folderService.update(
+      jwt.getSubject(),
+      folderId,
       folderRequest.parentId,
       folderRequest.name()
     );
