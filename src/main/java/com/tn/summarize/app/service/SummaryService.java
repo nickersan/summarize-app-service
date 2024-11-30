@@ -2,6 +2,7 @@ package com.tn.summarize.app.service;
 
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,6 +29,18 @@ public class SummaryService
   public Summary create(@NotNull String userId, @Nullable Long folderId, @NotNull String name)
   {
     return summaryClient.create(
+      new SummaryClient.SummaryRequest(
+        userId,
+        folderId,
+        name
+      )
+    );
+  }
+
+  public Summary update(@Nonnull String userId, long summaryId, @Nullable Long folderId, @NotNull String name)
+  {
+    return summaryClient.update(
+      summaryId,
       new SummaryClient.SummaryRequest(
         userId,
         folderId,
